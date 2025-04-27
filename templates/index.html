@@ -1,15 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pokemon</title>
+    <title>Pokémon Card Game</title>
 </head>
 <body>
-    <h1>pokemon Print</h1>
-    <li>
-        <p>premi 1 per aprire un pachetto</p>
-        <p>premi 2 per visualizzare la lista</p>
-    </li>
+    <h1>Pokémon Card Game</h1>
+    <p>Punti disponibili: {{ punti }}</p>
+
+    <form method="post" action="/open_pack">
+        <button type="submit">Apri un pacchetto (-10 punti)</button>
+    </form>
+
+    <form method="post" action="/show_collection">
+        <button type="submit">Mostra collezione</button>
+    </form>
+
+    <form method="post" action="/save_collection">
+        <button type="submit">Salva collezione su CSV</button>
+    </form>
+
+    <form method="get" action="/exit">
+        <button type="submit">Esci</button>
+    </form>
+
+    <hr>
+
+    {% if pack %}
+        <h2>Carte trovate:</h2>
+        <ul>
+        {% for card in pack %}
+            <li>{{ card }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if collection %}
+        <h2>La tua collezione:</h2>
+        <ul>
+        {% for card in collection %}
+            <li>{{ card }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
 </body>
 </html>
