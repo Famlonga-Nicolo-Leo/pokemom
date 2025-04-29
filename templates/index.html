@@ -1,51 +1,39 @@
-<!doctype html>
-<html lang="it">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Pokémon Card Game</title>
+    <title>Documento</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-    <h1>Pokémon Card Game</h1>
-    <p>Punti disponibili: {{ punti }}</p>
+    <div>
+        <h1>pokemon apritore</h1>
+        <p>crediti rimanenti: {{ p }}</p>
+        {% if messaggio %}
+        <p>{{ messaggio }}</p>
+        {% endif %}
 
-    <form method="post" action="/open_pack">
-        <button type="submit">Apri un pacchetto (-10 punti)</button>
-    </form>
+        <form action="/pacchetto" method="post">
+            <button type="submit">apri una busta</button>
+        </form>
 
-    <form method="post" action="/show_collection">
-        <button type="submit">Mostra collezione</button>
-    </form>
+        <form action="/pokedex" method="post">
+            <button type="submit">salva nel pokedex</button>
+        </form>
 
-    <form method="post" action="/save_collection">
-        <button type="submit">Salva collezione su CSV</button>
-    </form>
-
-    <form method="get" action="/exit">
-        <button type="submit">Esci</button>
-    </form>
-
-    <hr>
-
-    {% if pack %}
-        <h2>Carte trovate:</h2>
-        <ul>
-        {% for card in pack %}
-            <li>{{ card }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-
-    {% if collection %}
-        <h2>La tua collezione:</h2>
-        <ul>
-        {% for card in collection %}
-            <li>{{ card }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
+        <div class="pokedex">
+            <h1>buste sbustate:</h1>
+            {% if pokedex %}
+            <ul>
+                {% for carta in pokedex %}
+                <li>{{ carta.Nome }} (Rarità: {{ carta.Rarità }}, Attacco: {{ carta.Attacco }}, Difesa: {{ carta.Difesa}})</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>non hai nulla nel pokedex</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
