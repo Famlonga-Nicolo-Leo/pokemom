@@ -1,38 +1,76 @@
 <!DOCTYPE html>
+<!-- Dichiara che il file è un documento HTML5 -->
 <html lang="en">
+<!-- Apre il documento HTML con la lingua impostata su inglese -->
 
 <head>
     <title>Documento</title>
+    <!-- Imposta il titolo della pagina che appare nella scheda del browser -->
+
     <link rel="stylesheet" href="/static/style.css">
+    <!-- Collega il file CSS per lo stile della pagina.
+         In Flask, i file statici si trovano nella cartella "static" -->
 </head>
 
 <body>
+    <!-- Inizia il corpo del documento -->
+
     <div>
+        <!-- Un contenitore per tutto il contenuto visibile -->
+
         <h1>pokemon apritore</h1>
+        <!-- Titolo principale della pagina -->
+
         <p>crediti rimanenti: {{ p }}</p>
+        <!-- Mostra i crediti rimasti (variabile 'p' passata da Flask) -->
+
         {% if messaggio %}
+        <!-- Blocca l'HTML condizionato: mostra il paragrafo seguente solo se 'messaggio' è definito -->
         <p>{{ messaggio }}</p>
+        <!-- Mostra il contenuto della variabile 'messaggio' -->
         {% endif %}
 
         <form action="/pacchetto" method="post">
+            <!-- Form per inviare una richiesta POST al percorso '/pacchetto' -->
             <button type="submit">apri una busta</button>
+            <!-- Bottone per inviare il form e aprire una busta -->
         </form>
 
         <form action="/pokedex" method="post">
+            <!-- Form per inviare una richiesta POST al percorso '/pokedex' -->
             <button type="submit">salva nel pokedex</button>
+            <!-- Bottone per salvare qualcosa nel pokedex -->
         </form>
 
         <div class="pokedex">
+            <!-- Contenitore con classe "pokedex" per stile CSS -->
+
             <h1>buste sbustate:</h1>
+            <!-- Sottotitolo per la lista delle buste aperte -->
+
             {% if pokedex %}
+            <!-- Se la variabile 'pokedex' contiene dati -->
+
             <ul>
+                <!-- Inizia una lista non ordinata -->
                 {% for carta in pokedex %}
+                <!-- Per ogni oggetto 'carta' nella lista 'pokedex' -->
+
                 <li>{{ carta.Nome }} (Rarità: {{ carta.Rarità }}, Attacco: {{ carta.Attacco }}, Difesa: {{ carta.Difesa}})</li>
+                <!-- Mostra i dati della carta (nome, rarità, attacco, difesa) -->
+
                 {% endfor %}
+                <!-- Fine del ciclo for -->
             </ul>
+
             {% else %}
+            <!-- Se 'pokedex' è vuoto o non esiste -->
+
             <p>non hai nulla nel pokedex</p>
+            <!-- Mostra un messaggio di default -->
+
             {% endif %}
+            <!-- Fine del blocco if -->
         </div>
     </div>
 </body>
