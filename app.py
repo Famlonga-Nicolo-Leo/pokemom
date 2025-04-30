@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, url_for, request, redirect
 import random
 import pandas
 
@@ -47,13 +47,7 @@ carte = [
     {"Nome": "Arceus", "Generazione": 4, "Rarità": "Comune", "Attacco": 22, "Difesa": 84, "Valore_p": 0},
 ]
 
-# Valore in punti delle carte in base alla rarità
-valore_rarità = {
-    "Comune": 10,
-    "Non Comune": 25,
-    "Rara": 50,
-    "leggendaria": 100
-}
+
 
 # Prezzo di un pacchetto di carte
 prezzo = 10
