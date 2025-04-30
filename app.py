@@ -56,8 +56,8 @@ prezzo = 10
 crediti = 100
 
 # Dizionario che rappresenta lo stato del giocatore
-x = {
-    "p": crediti,        # Punti energia crediti
+giocatore_diz = {
+    "cr_g": crediti,        # Punti energia crediti
     "pokedex": []        # Carte ottenute dal giocatore
 }
 
@@ -76,39 +76,38 @@ def seleziona_carta():
 # Route principale - mostra la homepage con crediti e pokedex
 @app.route("/")
 def home():
-    return render_template("index.html", p=x["p"], pokedex=x["pokedex"])
+    return render_template("index.html", cr_g=giocatore_diz["cr_g"], pokedex=giocatore_diz["pokedex"])
 
 # Route per salvare il pokedex in un file CSV
 @app.route("/pokedex", methods=["POST"])
 def salva_pokedex():
-    df = pandas.DataFrame(x["pokedex"])           # Converte il pokedex in DataFrame
-    file = "pokedex.csv"                          # Nome del file
-    df.to_csv(file, index=False)                  # Salva il file CSV senza indici
-    messaggio = "carte acquisite nel " + file     # Messaggio di conferma
-    return render_template("index.html", p=x["p"], pokedex=x["pokedex"], messaggio=messaggio)
+    df = pandas.DataFrame(giocatore_diz["pokedex"])           
+    file = "pokedex.csv"                          
+    df.to_csv(file, index=False)                  
+    messaggio = "carte acquisite nel " + file     
+    return render_template("index.html", cr_g=giocatore_diz["cr_g"], pokedex=giocatore_diz["pokedex"], messaggio=messaggio)
 
 # Route per sbustare un pacchetto di 5 carte
 @app.route("/pacchetto", methods=["POST"])
 def sbusta():
-    # Controlla se il giocatore ha abbastanza crediti
-    if x["p"] < prezzo:
+    
+    if giocatore_diz["cr_g"] < prezzo:
         messaggio = "energia insufficiente"
-        return render_template("index.html", p=x["p"], pokedex=x["pokedex"], messaggio=messaggio)
+        return render_template("index.html", cr_g=giocatore_diz["cr_g"], pokedex=giocatore_diz["pokedex"], messaggio=messaggio)
 
     # Scala il prezzo dal credito
-    x["p"] -= prezzo
+    giocatore_diz["cr_g"] -= prezzo
     pacchetto = []
 
     # Estrae 5 carte casuali
     for i in range(5):
         carta = seleziona_carta()         # Seleziona carta
-        pacchetto.append(carta)           # Aggiunge la carta al pacchetto
-        x["p"] += carta["Valore_p"]       # Aggiunge valore_p alla valuta del giocatore
+        pacchetto.append(carta)           
+        giocatore_diz["cr_g"] += carta["Valore_p"]       # Aggiunge valore_p alla valuta del giocatore
 
     # Aggiunge tutte le carte ottenute al pokedex
-    x["pokedex"].extend(pacchetto)
+    giocatore_diz["pokedex"].extend(pacchetto)
 
-    # Crea un messaggio con i nomi delle carte sbustate
     messaggio = "carte trovate: " + ", ".join([c["Nome"] for c in pacchetto])
 
     # Stampa le carte ottenute nella console (debug)
@@ -116,7 +115,7 @@ def sbusta():
         print(f"{carta['Nome']} (Rarità: {carta['Rarità']}, Attacco: {carta['Attacco']}, Difesa: {carta['Difesa']})")
 
     # Ritorna alla homepage con il messaggio e dati aggiornati
-    return render_template("index.html", p=x["p"], pokedex=x["pokedex"], messaggio=messaggio)
+    return render_template("index.html", cr_g=giocatore_diz["cr_g"], pokedex=giocatore_diz["pokedex"], messaggio=messaggio)
 
 # Avvia l'app Flask
 if __name__ == "__main__":

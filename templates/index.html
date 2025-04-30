@@ -21,12 +21,12 @@
         <h1>pokemon apritore</h1>
         <!-- Titolo principale della pagina -->
 
-        <p>crediti rimanenti: {{ p }}</p>
-        <!-- Mostra i crediti rimasti (variabile 'p' passata da Flask) -->
+        <cr_g>crediti rimanenti: {{ cr_g }}</cr_g>
+        <!-- Mostra i crediti rimasti (variabile 'cr_g' passata da Flask) -->
 
         {% if messaggio %}
         <!-- Blocca l'HTML condizionato: mostra il paragrafo seguente solo se 'messaggio' è definito -->
-        <p>{{ messaggio }}</p>
+        <cr_g>{{ messaggio }}</cr_g>
         <!-- Mostra il contenuto della variabile 'messaggio' -->
         {% endif %}
 
@@ -66,7 +66,7 @@
             {% else %}
             <!-- Se 'pokedex' è vuoto o non esiste -->
 
-            <p>non hai nulla nel pokedex</p>
+            <cr_g>non hai nulla nel pokedex</cr_g>
             <!-- Mostra un messaggio di default -->
 
             {% endif %}
